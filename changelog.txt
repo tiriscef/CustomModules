@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------------------------------
+Version: 0.17.1
+Date: 19. 05. 2019
+  Changes:
+    - Added fancy thumbnail
+    - Applies the times 2 multiplier to tier 0 modules if the halve slots option is enabled
+    - Fixed a typo
+---------------------------------------------------------------------------------------------------
+Version: 0.17.0
+Date: 18. 05. 2019
+  Changes:
+    - Update to 0.17
+    - Applies effect multiplier settings to tier 0 modules
