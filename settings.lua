@@ -159,14 +159,11 @@ data:extend({
 		minimum_value = prototype_minvalue,
 		maximum_value = prototype_maxvalue
     },
-
---buffing mixed modules
---[[    {
-        type = "string-setting",
-        name = "custom-modules-mixed-buff",
+    {
+        type = "bool-setting",
+        name = "custom-modules-integration-pymods",
         order = "afa",
         setting_type = "startup", 
-        default_value = "none",
-        allowed_values = {"none", "buff minority"}
-    },--]]
+        default_value = true
+    }, 
 })

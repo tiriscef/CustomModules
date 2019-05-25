@@ -1,4 +1,18 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.17.2
+Date: 25. 05. 2019
+  Changes:
+    - Added factorio standart library as dependency to save me from losing my mind to lua
+    - Large balancing changes
+    - Tier0 and 1 modules are available with only green science and electronic circuits
+    - Tier2 modules are available with only blue science and advanced circuits
+    - Rebalanced the effects of all modules
+    - Added an exponential growth per tier
+    - Added a lot of balancing settings
+    - Added an option to restore the 0.16 balancing of this mod
+    - Added an optional integration of pyanodons mods
+    - Module recipes are now unlocked by the custom modules technologies instead of a lua script
+---------------------------------------------------------------------------------------------------
 Version: 0.17.1
 Date: 19. 05. 2019
   Changes:

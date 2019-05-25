@@ -333,7 +333,16 @@ function create_module(tier, j, k)
 		}
 	}:add_unlock(technologies[tier])
 
-	table.insert(custom_modules_module_recipes[tier], recipe_name)
+	local already_in_table = false
+	for _, rec in pairs(custom_modules_module_recipes[tier]) do
+		if recipe_name == rec then
+			already_in_table = true
+		end
+	end
+
+	if not already_in_table then
+		table.insert(custom_modules_module_recipes[tier], recipe_name)
+	end
 
 	ITEM {
 		type = "module",
