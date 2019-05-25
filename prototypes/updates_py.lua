@@ -16,7 +16,7 @@ recipe_red:add_ingredient({type = "item", name = "engine-unit", amount = 2 * hal
 recipe_green:add_ingredient({type = "item", name = "equipment-chassi", amount = 1 * halve_multiplier})
 recipe_green:add_ingredient({type = "item", name = "ralesia", amount = 30 * halve_multiplier})
 recipe_green:add_ingredient({type = "item", name = "log", amount = 5 * halve_multiplier})
-recipe_green:add_ingredient({type = "item", name = "fawogae", amount = 10 * halve_multiplier})
+recipe_green:add_ingredient({type = "item", name = "fawogae-substrate", amount = 10 * halve_multiplier})
 recipe_green:add_ingredient({type = "item", name = "pure-sand", amount = 10 * halve_multiplier})
 recipe_green:add_ingredient({type = "item", name = "calcium-carbide", amount = 10 * halve_multiplier})
 
@@ -46,15 +46,39 @@ recipe_assembler3:add_ingredient({type = "item", name = "processing-unit", amoun
 recipe_assembler3:add_ingredient({type = "item", name = "module-CC", amount = 6})
 
 for _, recipe_module in pairs(custom_modules_module_recipes[2]) do
-    RECIPE(recipe_module):add_ingredient({type = "item", name = "optical-fiber", amount = 10})
+    RECIPE(recipe_module):add_ingredient({type = "item", name = "optical-fiber", amount = 10 * halve_multiplier})
+
+    if string.find(recipe_module, "[RYM]") then
+        RECIPE(recipe_module):add_ingredient({type = "item", name = "nexelit-plate", amount = 10 * halve_multiplier})
+    end
+
+    if string.find(recipe_module, "[YGC]") then
+        RECIPE(recipe_module):add_ingredient({type = "item", name = "filtration-media", amount = 2 * halve_multiplier})
+    end
+
+    if string.find(recipe_module, "[BCM]") then
+        RECIPE(recipe_module):add_ingredient({type = "item", name = "medium-electric-pole", amount = 2 * halve_multiplier})
+    end
 end
 
 for _, recipe_module in pairs(custom_modules_module_recipes[3]) do
-    RECIPE(recipe_module):add_ingredient({type = "item", name = "optical-fiber", amount = 50})
+    RECIPE(recipe_module):add_ingredient({type = "item", name = "optical-fiber", amount = 50 * halve_multiplier})
     RECIPE(recipe_module):replace_ingredient("nuclear-fuel", "fuelrod-mk01")
 
-    if string.find(recipe_module, ".*[YGC].*") then
-        RECIPE(recipe_module):add_ingredient({type = "item", name = "filtration-media", amount = 10})
+    if string.find(recipe_module, "[RYM]") then
+        if mods["pyindustry"] then
+            RECIPE(recipe_module):add_ingredient({type = "item", name = "py-construction-robot-01", amount = 5 * halve_multiplier})
+        else
+            RECIPE(recipe_module):add_ingredient({type = "item", name = "construction-robot", amount = 5 * halve_multiplier})
+        end
+    end
+
+    if string.find(recipe_module, "[YGC]") then
+        RECIPE(recipe_module):add_ingredient({type = "item", name = "filtration-media", amount = 10 * halve_multiplier})
+    end
+
+    if string.find(recipe_module, "[BCM]") then
+        RECIPE(recipe_module):add_ingredient({type = "item", name = "substation", amount = 2 * halve_multiplier})
     end
 end
 
@@ -75,16 +99,16 @@ if mods["pyhightech"] then
     recipe_assembler3:replace_ingredient("processing-unit", "intelligent-unit")
 
     for _, recipe_module in pairs(custom_modules_module_recipes[1]) do
-        RECIPE(recipe_module):add_ingredient({type = "item", name = "pcb1", amount = 2})
+        RECIPE(recipe_module):add_ingredient({type = "item", name = "pcb1", amount = 2 * halve_multiplier})
     end
 
     for _, recipe_module in pairs(custom_modules_module_recipes[2]) do
-        RECIPE(recipe_module):add_ingredient({type = "item", name = "pcb2", amount = 2})
+        RECIPE(recipe_module):add_ingredient({type = "item", name = "pcb2", amount = 2 * halve_multiplier})
     end
 
     for _, recipe_module in pairs(custom_modules_module_recipes[3]) do
-        RECIPE(recipe_module):add_ingredient({type = "item", name = "pcb3-2", amount = 2})
-        RECIPE(recipe_module):add_ingredient({type = "item", name = "intelligent-unit", amount = 50})
+        RECIPE(recipe_module):add_ingredient({type = "item", name = "pcb3-2", amount = 2 * halve_multiplier})
+        RECIPE(recipe_module):add_ingredient({type = "item", name = "intelligent-unit", amount = 50 * halve_multiplier})
     end
 end
 
@@ -107,17 +131,17 @@ if mods["pyrawores"] then
     recipe_assembler3:add_ingredient({type = "item", name = "super-steel", amount = 10})
 
     for _, recipe_module in pairs(custom_modules_module_recipes[1]) do
-        RECIPE(recipe_module):add_ingredient({type = "item", name = "solder", amount = 10})
-        RECIPE(recipe_module):add_ingredient({type = "item", name = "tinned-cable", amount = 10})
+        RECIPE(recipe_module):add_ingredient({type = "item", name = "solder", amount = 10 * halve_multiplier})
+        RECIPE(recipe_module):add_ingredient({type = "item", name = "tinned-cable", amount = 10 * halve_multiplier})
         RECIPE(recipe_module):remove_ingredient("copper-plate")
         RECIPE(recipe_module):remove_ingredient("copper-cable")
     end
 
     for _, recipe_module in pairs(custom_modules_module_recipes[2]) do
-        RECIPE(recipe_module):add_ingredient({type = "item", name = "solder", amount = 30})
+        RECIPE(recipe_module):add_ingredient({type = "item", name = "solder", amount = 30 * halve_multiplier})
     end
 
     for _, recipe_module in pairs(custom_modules_module_recipes[3]) do
-        RECIPE(recipe_module):add_ingredient({type = "item", name = "solder", amount = 100})
+        RECIPE(recipe_module):add_ingredient({type = "item", name = "solder", amount = 100 * halve_multiplier})
     end
 end
