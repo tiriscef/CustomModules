@@ -3,6 +3,8 @@ if settings.startup["custom-modules-half-slots"].value then
 	halve_multiplier = 2
 end
 
+TECHNOLOGY("modules"):remove_prereq("advanced-electronics"):add_prereq("coal-processing-2")
+
 --prototype recipes
 local recipe_red = RECIPE("module-R0"):clear_ingredients()
 local recipe_green = RECIPE("module-G0"):clear_ingredients()
