@@ -159,6 +159,8 @@ data:extend({
 		minimum_value = prototype_minvalue,
 		maximum_value = prototype_maxvalue
     },
+
+    --integrations
     {
         type = "bool-setting",
         name = "custom-modules-integration-pymods",
@@ -166,4 +168,22 @@ data:extend({
         setting_type = "startup", 
         default_value = true
     }, 
+
+    --buff combinated modules
+    {
+        type = "bool-setting",
+        name = "custom-modules-buff-combination-modules",
+        order = "aga",
+        setting_type = "startup", 
+        default_value = true
+    }, 
+    {
+        type = "double-setting",
+        name = "custom-modules-combination-modules-increase",
+        order = "agb",
+        setting_type = "startup",
+        default_value = 0.2,
+		minimum_value = 0,
+		maximum_value = 40
+    },
 })

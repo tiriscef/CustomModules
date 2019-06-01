@@ -52,6 +52,9 @@ local green_consumption = settings.startup["custom-modules-prototype-green-consu
 local green_speed = settings.startup["custom-modules-prototype-green-speed"].value
 local green_pollution = settings.startup["custom-modules-prototype-green-pollution"].value
 
+local buff_combinations = settings.startup["custom-modules-buff-combination-modules"].value
+local buff_increase = settings.startup["custom-modules-combination-modules-increase"].value
+
 --adjustable--
 local ingredients = {
 	{
@@ -217,10 +220,24 @@ function get_ingredients(tier, j, k)
 	return ret
 end
 
+function get_buffed_effect_value(value, tier)
+	if value > 0 then
+		return value + buff_increase * (2 * tier - value)
+	else 
+		return 0
+	end
+end
+
 function get_effect(tier)
 	red_portion = 2 * red + magenta + yellow
 	green_portion = 2 * green + yellow + cyan
 	blue_portion = 2 * blue + cyan + magenta
+
+	if buff_combinations then
+		red_portion = get_buffed_effect_value(red_portion, tier)
+		green_portion = get_buffed_effect_value(green_portion, tier)
+		blue_portion = get_buffed_effect_value(blue_portion, tier)
+	end
 
 	prod_effect = red_productivity * red_portion * multiplier_productivity * tier_base ^ tier
 	speed_effect =
