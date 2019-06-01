@@ -3,60 +3,60 @@ if settings.startup["custom-modules-legacy"].value then
 end
 
 --replace vanilla modules in recipes
-for i, r in pairs(data.raw.recipe) do	
+for i, r in pairs(data.raw.recipe) do
 	if r.ingredients then
 		for j, n in pairs(r.ingredients) do
 			if n.name and n.name == "speed-module" then
-				n.name = "module-B0"				
-			end	
+				n.name = "module-B0"
+			end
 			if n[1] and n[1] == "speed-module" then
 				n[1] = "module-B0"
 			end
 			if n.name and n.name == "effectivity-module" then
-				n.name = "module-G0"				
-			end	
+				n.name = "module-G0"
+			end
 			if n[1] and n[1] == "effectivity-module" then
 				n[1] = "module-G0"
 			end
 			if n.name and n.name == "productivity-module" then
-				n.name = "module-R0"				
-			end	
+				n.name = "module-R0"
+			end
 			if n[1] and n[1] == "productivity-module" then
 				n[1] = "module-R0"
 			end
 			if n.name and n.name == "speed-module-2" then
-				n.name = "module-B"				
-			end	
+				n.name = "module-B"
+			end
 			if n[1] and n[1] == "speed-module-2" then
 				n[1] = "module-B"
 			end
 			if n.name and n.name == "effectivity-module-2" then
-				n.name = "module-G"				
-			end	
+				n.name = "module-G"
+			end
 			if n[1] and n[1] == "effectivity-module-2" then
 				n[1] = "module-G"
 			end
 			if n.name and n.name == "productivity-module-2" then
-				n.name = "module-R"				
-			end	
+				n.name = "module-R"
+			end
 			if n[1] and n[1] == "productivity-module-2" then
 				n[1] = "module-R"
 			end
 			if n.name and n.name == "speed-module-3" then
-				n.name = "module-BB"				
-			end	
+				n.name = "module-BB"
+			end
 			if n[1] and n[1] == "speed-module-3" then
 				n[1] = "module-BB"
 			end
 			if n.name and n.name == "effectivity-module-3" then
-				n.name = "module-GG"				
-			end	
+				n.name = "module-GG"
+			end
 			if n[1] and n[1] == "effectivity-module-3" then
 				n[1] = "module-GG"
 			end
 			if n.name and n.name == "productivity-module-3" then
-				n.name = "module-RR"				
-			end	
+				n.name = "module-RR"
+			end
 			if n[1] and n[1] == "productivity-module-3" then
 				n[1] = "module-RR"
 			end
@@ -92,42 +92,42 @@ for i, t in pairs(data.raw.technology) do
 		m2 = 0
 		for j, p in pairs(t.prerequisites) do
 			if p == "speed-module-3" then
-				m2 = m2+1
+				m2 = m2 + 1
 				if m2 == 1 then
 					t.prerequisites[j] = "custom-m-2"
 				else
 					t.prerequisites[j] = nil
 				end
 			elseif p == "effectivity-module-3" then
-				m2 = m2+1
+				m2 = m2 + 1
 				if m2 == 1 then
 					t.prerequisites[j] = "custom-m-2"
 				else
 					t.prerequisites[j] = nil
 				end
 			elseif p == "productivity-module-3" then
-				m2 = m2+1
+				m2 = m2 + 1
 				if m2 == 1 then
 					t.prerequisites[j] = "custom-m-2"
 				else
 					t.prerequisites[j] = nil
 				end
 			elseif p == "speed-module-2" then
-				m1 = m1+1
+				m1 = m1 + 1
 				if m1 == 1 then
 					t.prerequisites[j] = "custom-m"
 				else
 					t.prerequisites[j] = nil
 				end
 			elseif p == "effectivity-module-2" then
-				m1 = m1+1
+				m1 = m1 + 1
 				if m1 == 1 then
 					t.prerequisites[j] = "custom-m"
 				else
 					t.prerequisites[j] = nil
 				end
 			elseif p == "productivity-module-2" then
-				m1 = m1+1
+				m1 = m1 + 1
 				if m1 == 1 then
 					t.prerequisites[j] = "custom-m"
 				else
@@ -143,7 +143,6 @@ for i, t in pairs(data.raw.technology) do
 		end
 	end
 	if t.name == "modules" then
-		
 	elseif t.name == "speed-module" then
 		data.raw.technology[t.name] = nil
 	elseif t.name == "productivity-module" then
@@ -190,31 +189,66 @@ for i, t in pairs(data.raw.technology) do
 	end
 end
 
-if settings.startup["custom-modules-half-slots"].value then
-	for i,e in pairs(data.raw.beacon) do
-		if e.module_specification and e.module_specification.module_slots and e.module_specification.module_slots > 0 then
-			e.module_specification.module_slots = math.floor(e.module_specification.module_slots/2)
-		end
-	end
-	for i,e in pairs(data.raw["assembling-machine"]) do
-		if e.module_specification and e.module_specification.module_slots and e.module_specification.module_slots > 0 then
-			e.module_specification.module_slots = math.floor(e.module_specification.module_slots/2)
-		end
-	end
-	for i,e in pairs(data.raw.furnace) do
-		if e.module_specification and e.module_specification.module_slots and e.module_specification.module_slots > 0 then
-			e.module_specification.module_slots = math.floor(e.module_specification.module_slots/2)
-		end
-	end
-	for i,e in pairs(data.raw["mining-drill"]) do
-		if e.module_specification and e.module_specification.module_slots and e.module_specification.module_slots > 0 then
-			e.module_specification.module_slots = math.floor(e.module_specification.module_slots/2)
-		end
-	end
-	for i,e in pairs(data.raw["lab"]) do
-		if e.module_specification and e.module_specification.module_slots and e.module_specification.module_slots > 0 then
-			e.module_specification.module_slots = math.floor(e.module_specification.module_slots/2)
+--halve module slots
+local subgroups = {"assembling-machine", "furnace", "beacon", "mining-drill", "lab", "rocket-silo"}
+
+function halve_module_slots_of_subgroup(group)
+	for _, entity in pairs(data.raw[group]) do
+		if entity.module_specification and entity.module_specification.module_slots then
+			entity.module_specification.module_slots = math.ceil(entity.module_specification.module_slots / 2)
 		end
 	end
 end
 
+if settings.startup["custom-modules-half-slots"].value then
+	for _, group in pairs(subgroups) do
+		halve_module_slots_of_subgroup(group)
+	end
+end
+
+--add or substract module slots
+local adjust_values = {
+	["assembling-machine"] = settings.startup["custom-modules-slots-assembling-machine"].value,
+	["furnace"] = settings.startup["custom-modules-slots-furnace"].value,
+	["beacon"] = settings.startup["custom-modules-slots-beacon"].value,
+	["mining-drill"] = settings.startup["custom-modules-slots-mining-drill"].value,
+	["lab"] = settings.startup["custom-modules-slots-lab"].value,
+	["rocket-silo"] = settings.startup["custom-modules-slots-rocket-silo"].value
+}
+local allow_modules = settings.startup["custom-modules-slots-permission"].value
+
+function adjust_module_slots_of_entity(entity, value)
+	if entity.module_specification then
+		local number_slots = entity.module_specification.module_slots
+		if not number_slots then
+			number_slots = 0
+		end
+
+		number_slots = math.max(number_slots + value, 0)
+		entity.module_specification.module_slots = number_slots
+	else
+		if allow_modules and value > 0 then
+			entity.module_specification = {
+				module_slots = value
+			}
+			entity.allowed_effects = {
+				"consumption",
+				"speed",
+				"productivity",
+				"pollution"
+			}
+		end
+	end
+end
+
+function adjust_module_slots_of_subgroup(group, value)
+	for _, entity in pairs(data.raw[group]) do
+		adjust_module_slots_of_entity(entity, value)
+	end
+end
+
+for group, value in pairs(adjust_values) do
+	if value ~= 0 then
+		adjust_module_slots_of_subgroup(group, value)
+	end
+end

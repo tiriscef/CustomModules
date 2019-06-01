@@ -186,4 +186,55 @@ data:extend({
 		minimum_value = 0,
 		maximum_value = 40
     },
+
+    --add or substract module slots
+    {
+        type = "int-setting",
+        name = "custom-modules-slots-assembling-machine",
+        order = "aha",
+        setting_type = "startup",
+        default_value = 0
+    },
+    {
+        type = "int-setting",
+        name = "custom-modules-slots-mining-drill",
+        order = "ahb",
+        setting_type = "startup",
+        default_value = 0
+    },
+    {
+        type = "int-setting",
+        name = "custom-modules-slots-furnace",
+        order = "ahc",
+        setting_type = "startup",
+        default_value = 0
+    },
+    {
+        type = "int-setting",
+        name = "custom-modules-slots-lab",
+        order = "ahd",
+        setting_type = "startup",
+        default_value = 0
+    },
+    {
+        type = "int-setting",
+        name = "custom-modules-slots-beacon",
+        order = "ahe",
+        setting_type = "startup",
+        default_value = 0
+    },
+    {
+        type = "int-setting",
+        name = "custom-modules-slots-rocket-silo",
+        order = "ahf",
+        setting_type = "startup",
+        default_value = 0
+    },
+    {
+        type = "bool-setting",
+        name = "custom-modules-slots-permission",
+        order = "ahg",
+        setting_type = "startup", 
+        default_value = false
+    }, 
 })
