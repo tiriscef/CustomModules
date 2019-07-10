@@ -224,7 +224,7 @@ function adjust_module_slots_of_entity(entity, value)
 			number_slots = 0
 		end
 
-		number_slots = math.max(number_slots + value, 0)
+		number_slots = math.min(math.max(number_slots + value, 0), 65535)
 		entity.module_specification.module_slots = number_slots
 	else
 		if allow_modules and value > 0 then
