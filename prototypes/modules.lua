@@ -67,11 +67,11 @@ local ingredients = {
 		{type = "item", name = "copper-plate", amount = 40}
 	},
 	{
-		{type = "item", name = "advanced-circuit", amount = 100 * h}, 
+		{type = "item", name = "advanced-circuit", amount = 100 * h},
 		{type = "item", name = "plastic-bar", amount = 50 * h}
 	},
 	{
-		{type = "item", name = "processing-unit", amount = 150 * h}, 
+		{type = "item", name = "processing-unit", amount = 150 * h},
 		{type = "item", name = "nuclear-fuel", amount = 1 * h}
 	}
 }
@@ -96,17 +96,17 @@ local composition = {
 }
 
 --table with a table for each tier, will be filled with their names by this script
-custom_modules_module_recipes = {[0] = {}, {}, {}, {}}
+CustomModules_recipes = {[0] = {}, {}, {}, {}}
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 ----- FUNCTIONS -----
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-function add(A, B)
+local function add(A, B)
 	return {A[1] + B[1], A[2] + B[2], A[3] + B[3]}
 end
 
-function apply(X)
+local function apply(X)
 	R = X[1]
 	G = X[2]
 	B = X[3]
@@ -197,7 +197,7 @@ function apply(X)
 	end
 end
 
-function get_ingredients(tier, j, k)
+local function get_ingredients(tier, j, k)
 	if tier == 0 then
 		return ingredients[1]
 	end
@@ -211,7 +211,10 @@ function get_ingredients(tier, j, k)
 	end
 
 	if J == K then
-		table.insert(ret, {type = "item", name = "module-" .. J, amount = number_of_previous_tier[tier][1] + number_of_previous_tier[tier][2]})
+		table.insert(
+			ret,
+			{type = "item", name = "module-" .. J, amount = number_of_previous_tier[tier][1] + number_of_previous_tier[tier][2]}
+		)
 	else
 		table.insert(ret, {type = "item", name = "module-" .. J, amount = number_of_previous_tier[tier][1]})
 		table.insert(ret, {type = "item", name = "module-" .. K, amount = number_of_previous_tier[tier][2]})
@@ -220,18 +223,18 @@ function get_ingredients(tier, j, k)
 	return ret
 end
 
-function get_buffed_effect_value(value, tier)
+local function get_buffed_effect_value(value, tier)
 	if value > 0 then
 		return value + buff_increase * (2 * tier - value)
-	else 
+	else
 		return 0
 	end
 end
 
-function get_effect(tier)
-	red_portion = 2 * red + magenta + yellow
-	green_portion = 2 * green + yellow + cyan
-	blue_portion = 2 * blue + cyan + magenta
+local function get_effect(tier)
+	local red_portion = 2 * red + magenta + yellow
+	local green_portion = 2 * green + yellow + cyan
+	local blue_portion = 2 * blue + cyan + magenta
 
 	if buff_combinations then
 		red_portion = get_buffed_effect_value(red_portion, tier)
@@ -239,15 +242,15 @@ function get_effect(tier)
 		blue_portion = get_buffed_effect_value(blue_portion, tier)
 	end
 
-	prod_effect = red_productivity * red_portion * multiplier_productivity * tier_base ^ tier
-	speed_effect =
+	local prod_effect = red_productivity * red_portion * multiplier_productivity * tier_base ^ tier
+	local speed_effect =
 		(red_speed * red_portion + blue_speed * blue_portion + green_speed * green_portion) * multiplier_speed *
 		tier_base ^ tier
-	consumption_effect =
+	local consumption_effect =
 		(red_consumption * red_portion + blue_consumption * blue_portion + green_consumption * green_portion) *
 		multiplier_consumption *
 		tier_base ^ tier
-	pollution_effect =
+	local pollution_effect =
 		(red_pollution * red_portion + blue_pollution * blue_portion + green_pollution * green_portion) * multiplier_pollution *
 		tier_base ^ tier
 
@@ -259,7 +262,7 @@ function get_effect(tier)
 	}
 end
 
-function get_category()
+local function get_category()
 	if red > 0 or magenta > 0 or yellow > 0 then
 		return "productivity"
 	elseif blue > 0 or cyan > 0 then
@@ -269,7 +272,7 @@ function get_category()
 	end
 end
 
-function get_tint(L)
+local function get_tint(L)
 	R = 2 * red + magenta + yellow + L
 	G = 2 * green + cyan + yellow + L
 	B = 2 * blue + cyan + magenta + L
@@ -279,7 +282,7 @@ function get_tint(L)
 	return {r = R / D, g = G / D, b = B / D, a = 1}
 end
 
-function get_order()
+local function get_order()
 	P = math.min(2 * red + magenta + yellow, 2 * green + cyan + yellow, 2 * blue + cyan + magenta)
 	R = (2 * red + magenta + yellow) / 6
 	G = (2 * green + cyan + yellow) / 6
@@ -308,7 +311,7 @@ function get_order()
 	return P .. "-" .. S
 end
 
-function create_module(tier, j, k)
+local function create_module(tier, j, k)
 	C = composition[tier]
 
 	current = add(t[C[1]][j], t[C[2]][k])
@@ -319,7 +322,7 @@ function create_module(tier, j, k)
 	local recipe_name = "module-" .. d[C[1]][j] .. d[C[2]][k]
 	local technologies = {"custom-m", "custom-m-2", "custom-m-3"}
 
-	RECIPE {
+	Tirislib_Recipe.create {
 		type = "recipe",
 		name = recipe_name,
 		enabled = false,
@@ -351,17 +354,17 @@ function create_module(tier, j, k)
 	}:add_unlock(technologies[tier])
 
 	local already_in_table = false
-	for _, rec in pairs(custom_modules_module_recipes[tier]) do
+	for _, rec in pairs(CustomModules_recipes[tier]) do
 		if recipe_name == rec then
 			already_in_table = true
 		end
 	end
 
 	if not already_in_table then
-		table.insert(custom_modules_module_recipes[tier], recipe_name)
+		table.insert(CustomModules_recipes[tier], recipe_name)
 	end
 
-	ITEM {
+	Tirislib_Item.create {
 		type = "module",
 		name = "module-" .. s,
 		icons = {
@@ -433,7 +436,7 @@ for j = 1, 3 do
 			}
 		}
 	)
-	table.insert(custom_modules_module_recipes[0], recipe_name)
+	table.insert(CustomModules_recipes[0], recipe_name)
 end
 
 -- Tier 1

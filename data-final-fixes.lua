@@ -1,11 +1,31 @@
-if settings.startup["custom-modules-legacy"].value then
-	require("prototypes.legacy.modules")
-end
+local vanilla_recipes = {
+	["speed-module"] = true,
+	["speed-module-2"] = true,
+	["speed-module-3"] = true,
+	["effectivity-module"] = true,
+	["effectivity-module-2"] = true,
+	["effectivity-module-3"] = true,
+	["productivity-module"] = true,
+	["productivity-module-2"] = true,
+	["productivity-module-3"] = true,
+}
 
 --replace vanilla modules in recipes
-for i, r in pairs(data.raw.recipe) do
+for _, r in pairs(data.raw.recipe) do
+	-- hide vanilla recipes
+	if vanilla_recipes[r.name] then
+		r.hidden = true
+
+		if type(r.normal) == "table" then
+			r.normal.hidden = true
+		end
+		if type(r.expensive) == "table" then
+			r.expensive.hidden = true
+		end
+	end
+
 	if r.ingredients then
-		for j, n in pairs(r.ingredients) do
+		for _, n in pairs(r.ingredients) do
 			if n.name and n.name == "speed-module" then
 				n.name = "module-B0"
 			end
@@ -62,30 +82,9 @@ for i, r in pairs(data.raw.recipe) do
 			end
 		end
 	end
-
-	--remove vanilla module recipes
-	if r.name == "speed-module" then
-		data.raw.recipe[i] = nil
-	elseif r.name == "productivity-module" then
-		data.raw.recipe[i] = nil
-	elseif r.name == "effectivity-module" then
-		data.raw.recipe[i] = nil
-	elseif r.name == "speed-module-2" then
-		data.raw.recipe[i] = nil
-	elseif r.name == "productivity-module-2" then
-		data.raw.recipe[i] = nil
-	elseif r.name == "effectivity-module-2" then
-		data.raw.recipe[i] = nil
-	elseif r.name == "speed-module-3" then
-		data.raw.recipe[i] = nil
-	elseif r.name == "productivity-module-3" then
-		data.raw.recipe[i] = nil
-	elseif r.name == "effectivity-module-3" then
-		data.raw.recipe[i] = nil
-	end
 end
 
-for i, t in pairs(data.raw.technology) do
+for _, t in pairs(data.raw.technology) do
 	if t.prerequisites then
 		m = 0
 		m1 = 0
@@ -192,7 +191,7 @@ end
 --halve module slots
 local subgroups = {"assembling-machine", "furnace", "beacon", "mining-drill", "lab", "rocket-silo"}
 
-function halve_module_slots_of_subgroup(group)
+local function halve_module_slots_of_subgroup(group)
 	for _, entity in pairs(data.raw[group]) do
 		if entity.module_specification and entity.module_specification.module_slots then
 			entity.module_specification.module_slots = math.ceil(entity.module_specification.module_slots / 2)
@@ -217,7 +216,7 @@ local adjust_values = {
 }
 local allow_modules = settings.startup["custom-modules-slots-permission"].value
 
-function adjust_module_slots_of_entity(entity, value)
+local function adjust_module_slots_of_entity(entity, value)
 	if entity.module_specification then
 		local number_slots = entity.module_specification.module_slots
 		if not number_slots then
@@ -241,7 +240,7 @@ function adjust_module_slots_of_entity(entity, value)
 	end
 end
 
-function adjust_module_slots_of_subgroup(group, value)
+local function adjust_module_slots_of_subgroup(group, value)
 	for _, entity in pairs(data.raw[group]) do
 		adjust_module_slots_of_entity(entity, value)
 	end

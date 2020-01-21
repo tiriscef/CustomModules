@@ -1,4 +1,16 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.17.6
+Date: 21. 01. 2020
+  Changes:
+    - Update to factorio 0.18
+    - Moved away from factorio standard library
+    - Removed 0.16 legacy mode
+---------------------------------------------------------------------------------------------------
+Version: 0.17.5
+Date: 10. 11. 2019
+  Changes:
+    - Hides instead of deletes vanilla module recipes to avoid breaking other mods
+---------------------------------------------------------------------------------------------------
 Version: 0.17.4
 Date: 10. 07. 2019
   Changes:
@@ -14,7 +26,7 @@ Date: 01. 06. 2019
 Version: 0.17.2
 Date: 25. 05. 2019
   Changes:
-    - Added factorio standart library as dependency to save me from losing my mind to lua
+    - Added factorio standard library as dependency to save me from losing my mind to lua
     - Large balancing changes
     - Tier0 and 1 modules are available with only green science and electronic circuits
     - Tier2 modules are available with only blue science and advanced circuits

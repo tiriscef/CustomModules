@@ -1,5 +1,0 @@
-require("prototypes.legacy.recipe")
-require("prototypes.legacy.entity")
-require("prototypes.legacy.technology")
-require("prototypes.legacy.category")
-require("prototypes.legacy.item")
