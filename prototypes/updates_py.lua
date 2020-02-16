@@ -88,18 +88,18 @@ end
 
 if mods["pyfusionenergy"] then
     recipe_red:add_ingredient({type = "fluid", name = "vacuum", amount = 100 * halve_multiplier})
-    recipe_red:change_category("crafting-with-fluid")
+    recipe_red:set_field("category", "crafting-with-fluid")
 
     recipe_assembler2:replace_ingredient("advanced-circuit", "control-unit")
     recipe_assembler3:add_ingredient({type = "fluid", name = "vacuum", amount = 500})
-    recipe_assembler3:change_category("crafting-with-fluid")
+    recipe_assembler3:set_field("category", "crafting-with-fluid")
 end
 
 if mods["pyhightech"] then
     recipe_red:add_ingredient({type = "item", name = "pcb1", amount = 2 * halve_multiplier})
     recipe_green:add_ingredient({type = "item", name = "urea", amount = 10 * halve_multiplier})
 
-    recipe_assembler1:add_ingredient({type = "item", name = "chipshooter", amount = 1})
+    recipe_assembler1:add_ingredient({type = "item", name = "chipshooter-mk01", amount = 1})
     recipe_assembler3:replace_ingredient("processing-unit", "intelligent-unit")
 
     for _, recipe_module in pairs(CustomModules_recipes[1]) do
@@ -123,7 +123,7 @@ if mods["pypetroleumhandling"] then
     recipe_red:replace_ingredient("iron-gear-wheel", "small-parts-01")
     recipe_blue:add_ingredient({type = "item", name = "belt", amount = 20 * halve_multiplier})
     recipe_blue:add_ingredient({type = "fluid", name = "hot-air", amount = 100 * halve_multiplier})
-    recipe_blue:change_category("crafting-with-fluid")
+    recipe_blue:set_field("category", "crafting-with-fluid")
 
     recipe_assembler1:replace_ingredient("iron-gear-wheel", "small-parts-01")
     recipe_assembler2:add_ingredient({type = "item", name = "small-parts-02", amount = 15})

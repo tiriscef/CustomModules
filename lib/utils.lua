@@ -1,3 +1,5 @@
+local random = math.random
+
 --<< Just some helper functions >>
 Tirislib_Utils = {}
 
@@ -15,8 +17,48 @@ function Tirislib_Utils.sgn(x)
     end
 end
 
+function Tirislib_Utils.weighted_random(weights)
+    local sum = 0
+    for i = 1, #weights do
+        sum = sum + weights[i]
+    end
+
+    local random_index = random(sum)
+    local index = 0
+
+    repeat
+        index = index + 1
+        random_index = random_index - weights[index]
+    until random_index < 1
+
+    return index
+end
+
 --<< Just some table helper functions >>
 Tirislib_Tables = {}
+
+function Tirislib_Tables.count(tbl)
+    local count = 0
+
+    for _ in pairs(tbl) do
+        count = count + 1
+    end
+
+    return count
+end
+
+--- Removes all values of the given table that equal the given value.
+--- This function doesn't preserve the original order.
+function Tirislib_Tables.remove_all(tbl, value)
+    for i = #tbl, 1, -1 do
+        if tbl[i] == value then
+            if i ~= #tbl then
+                tbl[i] = tbl[#tbl]
+            end
+            tbl[#tbl] = nil
+        end
+    end
+end
 
 function Tirislib_Tables.get_keyset(tbl)
     local ret = {}
@@ -30,10 +72,20 @@ function Tirislib_Tables.get_keyset(tbl)
     return ret
 end
 
+function Tirislib_Tables.to_lookup(array)
+    local ret = {}
+
+    for i = 1, #array do
+        ret[array[i]] = true
+    end
+
+    return ret
+end
+
 --https://gist.github.com/Uradamus/10323382
 function Tirislib_Tables.shuffle(tbl)
     for i = #tbl, 2, -1 do
-        local j = math.random(i)
+        local j = random(i)
         tbl[i], tbl[j] = tbl[j], tbl[i]
     end
 
@@ -83,7 +135,7 @@ end
 
 function Tirislib_Tables.merge(lh, rh)
     for _, value in pairs(rh) do
-        table.insert(lh, value)
+        lh[#lh + 1] = value
     end
 
     return lh
@@ -97,6 +149,14 @@ function Tirislib_Tables.set_fields(tbl, fields)
     end
 
     return tbl
+end
+
+function Tirislib_Tables.merge_arrays(lh, rh)
+    for i = 1, #rh do
+        lh[#lh + 1] = rh[i]
+    end
+
+    return lh
 end
 
 function Tirislib_Tables.sum(tbl)
@@ -150,6 +210,16 @@ function Tirislib_Tables.new_array(size, value)
 
     for i = 1, size do
         ret[i] = value
+    end
+
+    return ret
+end
+
+function Tirislib_Tables.new_array_of_arrays(count)
+    local ret = {}
+
+    for i = 1, count do
+        ret[i] = {}
     end
 
     return ret
