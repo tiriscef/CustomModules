@@ -6,12 +6,14 @@ Tirislib_Item = {}
 -- lua is weird
 Tirislib_Item.__index = Tirislib_Item
 
+--- Class for arrays of items. Setter-functions can be called on them.
+Tirislib_ItemArray = {}
+Tirislib_ItemArray.__index = Tirislib_PrototypeArray.__index
+
 -- << getter functions >>
+local item_types = require("lib.prototype-types.item-types")
 function Tirislib_Item.get_by_name(name)
-    local item_types = require("lib.prototype-types.item-types")
-    local new = Tirislib_Prototype.get(item_types, name)
-    setmetatable(new, Tirislib_Item)
-    return new
+    return Tirislib_Prototype.get(item_types, name, Tirislib_Item)
 end
 
 function Tirislib_Item.get_from_prototype(prototype)
@@ -50,6 +52,49 @@ function Tirislib_Item.create(prototype)
 
     data:extend {prototype}
     return Tirislib_Item.get_by_name(prototype.name)
+end
+
+--- Creates a bunch of item prototypes.
+--- Item specification:
+--- name: name of the item prototype
+--- sprite_variations: sprite variations for the prototype to use
+--- distinctions: table of prototype fields that should be different from the batch specification
+function Tirislib_Item.batch_create(item_detail_array, batch_details)
+    local prototype_type = batch_details.type or "item"
+    local path = batch_details.icon_path or "__sosciencity-graphics__/graphics/icon/"
+    local size = batch_details.icon_size or 64
+    local subgroup = batch_details.subgroup
+    local stack_size = batch_details.stack_size or 200
+
+    local created_items = {}
+    for index, details in pairs(item_detail_array) do
+        local item =
+            Tirislib_Item.create {
+            type = prototype_type,
+            name = details.name,
+            icon = path .. details.name .. ".png",
+            icon_size = size,
+            subgroup = subgroup,
+            order = string.format("%03d", index),
+            stack_size = stack_size
+        }
+
+        local variations = details.sprite_variations
+        if variations then
+            item:add_sprite_variations(64, path .. variations.name, variations.count)
+
+            if variations.include_icon then
+                item:add_icon_to_sprite_variations()
+            end
+        end
+
+        Tirislib_Tables.set_fields(item, details.distinctions)
+
+        created_items[#created_items + 1] = item
+    end
+
+    setmetatable(created_items, Tirislib_ItemArray)
+    return created_items
 end
 
 -- << manipulation >>

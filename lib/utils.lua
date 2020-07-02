@@ -1,7 +1,14 @@
 local random = math.random
+local abs = math.abs
+local max = math.max
+local floor = math.floor
 
 --<< Just some helper functions >>
 Tirislib_Utils = {}
+
+function Tirislib_Utils.round(number)
+    return floor(number + 0.5)
+end
 
 function Tirislib_Utils.weighted_average(a, weight_a, b, weight_b)
     return (a * weight_a + b * weight_b) / (weight_a + weight_b)
@@ -34,8 +41,70 @@ function Tirislib_Utils.weighted_random(weights)
     return index
 end
 
+function Tirislib_Utils.maximum_metric_distance(x1, y1, x2, y2)
+    local dist_x = abs(x1 - x2)
+    local dist_y = abs(y1 - y2)
+
+    return max(dist_x, dist_y)
+end
+
+function Tirislib_Utils.desync_protection()
+    if game then
+        error("A function that is supposed to only be called during the control initialization stage got called at a later stage.")
+    end
+end
+
+--<< Just some string helper functions >>
+Tirislib_String = {}
+
+function Tirislib_String.begins_with(str, prefix)
+    return str:sub(1, prefix:len()) == prefix
+end
+
 --<< Just some table helper functions >>
 Tirislib_Tables = {}
+
+function Tirislib_Tables.equal(lh, rh)
+    if type(lh) ~= "table" or type(rh) ~= "table" then
+        return false
+    end
+
+    for k, v in pairs(lh) do
+        if type(v) == "table" then
+            if not Tirislib_Tables.equal(v, rh[k]) then
+                return false
+            end
+        else
+            if v ~= rh[k] then
+                return false
+            end
+        end
+    end
+
+    for k in pairs(rh) do
+        if lh[k] == nil then
+            return false
+        end
+    end
+
+    return true
+end
+
+function Tirislib_Tables.shallow_equal(lh, rh)
+    for k, v in pairs(lh) do
+        if v ~= rh[k] then
+            return false
+        end
+    end
+
+    for k in pairs(rh) do
+        if lh[k] == nil then
+            return false
+        end
+    end
+
+    return true
+end
 
 function Tirislib_Tables.count(tbl)
     local count = 0
@@ -52,14 +121,13 @@ end
 function Tirislib_Tables.remove_all(tbl, value)
     for i = #tbl, 1, -1 do
         if tbl[i] == value then
-            if i ~= #tbl then
-                tbl[i] = tbl[#tbl]
-            end
+            tbl[i] = tbl[#tbl]
             tbl[#tbl] = nil
         end
     end
 end
 
+--- Returns an array with all the keys of the given table.
 function Tirislib_Tables.get_keyset(tbl)
     local ret = {}
     local index = 1
@@ -71,8 +139,10 @@ function Tirislib_Tables.get_keyset(tbl)
 
     return ret
 end
+local get_keyset = Tirislib_Tables.get_keyset
 
-function Tirislib_Tables.to_lookup(array)
+--- Returns a table with the elements of the given array as keys.
+function Tirislib_Tables.array_to_lookup(array)
     local ret = {}
 
     for i = 1, #array do
@@ -118,6 +188,7 @@ function Tirislib_Tables.recursive_copy(tbl)
 
     return ret
 end
+local rec_copy = Tirislib_Tables.recursive_copy
 
 function Tirislib_Tables.contains(tbl, element)
     for _, value in pairs(tbl) do
@@ -133,14 +204,6 @@ function Tirislib_Tables.contains_key(tbl, key)
     return tbl[key] ~= nil
 end
 
-function Tirislib_Tables.merge(lh, rh)
-    for _, value in pairs(rh) do
-        lh[#lh + 1] = value
-    end
-
-    return lh
-end
-
 function Tirislib_Tables.set_fields(tbl, fields)
     if fields ~= nil then
         for key, value in pairs(fields) do
@@ -149,6 +212,38 @@ function Tirislib_Tables.set_fields(tbl, fields)
     end
 
     return tbl
+end
+
+function Tirislib_Tables.set_fields_passively(tbl, fields)
+    if fields ~= nil then
+        for key, value in pairs(fields) do
+            tbl[key] = tbl[key] or value
+        end
+    end
+
+    return tbl
+end
+
+function Tirislib_Tables.copy_fields(tbl, fields)
+    if fields ~= nil then
+        for key, value in pairs(fields) do
+            if type(value) == "table" then
+                tbl[key] = rec_copy(value)
+            else
+                tbl[key] = value
+            end
+        end
+    end
+
+    return tbl
+end
+
+function Tirislib_Tables.merge(lh, rh)
+    for _, value in pairs(rh) do
+        lh[#lh + 1] = value
+    end
+
+    return lh
 end
 
 function Tirislib_Tables.merge_arrays(lh, rh)
@@ -241,4 +336,54 @@ function Tirislib_Tables.insertion_sort_by_key(array, key)
     end
 
     return array
+end
+
+function Tirislib_Tables.has_numeric_key(tbl)
+    for key in pairs(tbl) do
+        if type(key) == "number" then
+            return true
+        end
+    end
+
+    return false
+end
+
+function Tirislib_Tables.union_array(lhs, rhs)
+    local ret = {}
+
+    for _, value in pairs(lhs) do
+        ret[value] = value
+    end
+    for _, value in pairs(rhs) do
+        ret[value] = value
+    end
+
+    return get_keyset(ret)
+end
+
+function Tirislib_Tables.pick_random_key(tbl)
+    local keys = get_keyset(tbl)
+    return keys[random(#keys)]
+end
+
+function Tirislib_Tables.pick_n_random_keys(tbl, n)
+    local keys = get_keyset(tbl)
+    local key_count = #keys
+    local ret = {}
+
+    for i = 1, n do
+        ret[i] = keys[random(key_count)]
+    end
+
+    return ret
+end
+
+function Tirislib_Tables.sequence(start, finish)
+    local ret = {}
+
+    for i = 0, finish - start do
+        ret[i + 1] = start + i
+    end
+
+    return ret
 end

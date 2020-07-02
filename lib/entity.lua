@@ -11,11 +11,9 @@ Tirislib_EntityArray = {}
 Tirislib_EntityArray.__index = Tirislib_PrototypeArray.__index
 
 -- << getter functions >>
+local entity_types = require("lib.prototype-types.entity-types")
 function Tirislib_Entity.get_by_name(name)
-    local entity_types = require("lib.prototype-types.entity-types")
-    local new = Tirislib_Prototype.get(entity_types, name)
-    setmetatable(new, Tirislib_Entity)
-    return new
+    return Tirislib_Prototype.get(entity_types, name, Tirislib_Entity)
 end
 
 function Tirislib_Entity.get_from_prototype(prototype)
@@ -74,14 +72,14 @@ end
 
 function Tirislib_Entity.get_empty_sprite()
     return {
-        filename = "__sosciencity__/graphics/empty.png",
+        filename = "__sosciencity-graphics__/graphics/empty.png",
         size = 1
     }
 end
 
 function Tirislib_Entity.get_empty_animation()
     return {
-        filename = "__sosciencity__/graphics/empty.png",
+        filename = "__sosciencity-graphics__/graphics/empty.png",
         size = 1,
         frame_count = 1
     }
@@ -89,7 +87,7 @@ end
 
 function Tirislib_Entity.get_placeholder_picture()
     return {
-        filename = "__sosciencity__/graphics/placeholder.png",
+        filename = "__sosciencity-graphics__/graphics/placeholder.png",
         width = 64,
         height = 54
     }
@@ -117,13 +115,13 @@ end
 
 local pipepictures = {
     north = {
-        filename = "__sosciencity__/graphics/entity/assembling-machine-1-pipe-N.png",
+        filename = "__sosciencity-graphics__/graphics/entity/assembling-machine-1-pipe-N.png",
         priority = "extra-high",
         width = 35,
         height = 18,
         shift = util.by_pixel(2.5, 14),
         hr_version = {
-            filename = "__sosciencity__/graphics/entity/hr-assembling-machine-1-pipe-N.png",
+            filename = "__sosciencity-graphics__/graphics/entity/hr-assembling-machine-1-pipe-N.png",
             priority = "extra-high",
             width = 71,
             height = 38,
@@ -132,13 +130,13 @@ local pipepictures = {
         }
     },
     east = {
-        filename = "__sosciencity__/graphics/entity/assembling-machine-1-pipe-E.png",
+        filename = "__sosciencity-graphics__/graphics/entity/assembling-machine-1-pipe-E.png",
         priority = "extra-high",
         width = 20,
         height = 38,
         shift = util.by_pixel(-25, 1),
         hr_version = {
-            filename = "__sosciencity__/graphics/entity/hr-assembling-machine-1-pipe-E.png",
+            filename = "__sosciencity-graphics__/graphics/entity/hr-assembling-machine-1-pipe-E.png",
             priority = "extra-high",
             width = 42,
             height = 76,
@@ -147,12 +145,12 @@ local pipepictures = {
         }
     },
     south = {
-        filename = "__sosciencity__/graphics/entity/assembling-machine-1-pipe-S.png",
+        filename = "__sosciencity-graphics__/graphics/entity/assembling-machine-1-pipe-S.png",
         width = 44,
         height = 31,
         shift = util.by_pixel(0, -31.5),
         hr_version = {
-            filename = "__sosciencity__/graphics/entity/hr-assembling-machine-1-pipe-S.png",
+            filename = "__sosciencity-graphics__/graphics/entity/hr-assembling-machine-1-pipe-S.png",
             width = 88,
             height = 61,
             shift = util.by_pixel(0, -31.25),
@@ -160,13 +158,13 @@ local pipepictures = {
         }
     },
     west = {
-        filename = "__sosciencity__/graphics/entity/assembling-machine-1-pipe-W.png",
+        filename = "__sosciencity-graphics__/graphics/entity/assembling-machine-1-pipe-W.png",
         priority = "extra-high",
         width = 19,
         height = 37,
         shift = util.by_pixel(25.5, 1.5),
         hr_version = {
-            filename = "__sosciencity__/graphics/entity/hr-assembling-machine-1-pipe-W.png",
+            filename = "__sosciencity-graphics__/graphics/entity/hr-assembling-machine-1-pipe-W.png",
             priority = "extra-high",
             width = 39,
             height = 73,
@@ -252,7 +250,7 @@ function Tirislib_Entity:add_mining_result(mining_result)
 
     for _, result in pairs(minable.results) do
         if Tirislib_RecipeEntry.can_be_merged(result, mining_result) then
-            Tirislib_RecipeEntry.merge_results(result, mining_result)
+            Tirislib_RecipeEntry.merge(result, mining_result)
             return self
         end
     end

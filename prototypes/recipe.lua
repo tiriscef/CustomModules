@@ -9,7 +9,7 @@ data:extend(
 			category = "crafting",
 			energy_required = 3.0,
 			ingredients = {
-				{type = "item", name = "assembling-machine-2", amount = 5},
+				{type = "item", name = "assembling-machine-1", amount = 5},
 				{type = "item", name = "electronic-circuit", amount = 20},
 				{type = "item", name = "steel-plate", amount = 30},
 				{type = "item", name = "stone-brick", amount = 50},
