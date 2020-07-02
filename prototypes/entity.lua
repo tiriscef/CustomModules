@@ -6,7 +6,7 @@ data:extend(
       icon = "__CustomModules__/graphics/icons/entities/module-assembler.png",
       icon_size = 32,
       flags = {"placeable-neutral", "placeable-player", "player-creation", "not-rotatable"},
-      minable = {hardness = 0.5, mining_time = 3, result = "module-assembler"},
+      minable = {mining_time = 1, result = "module-assembler"},
       max_health = 600,
       resistances = {
         {
@@ -64,7 +64,7 @@ data:extend(
         idle_sound = {filename = "__base__/sound/idle1.ogg", volume = 1},
         apparent_volume = 4
       },
-      crafting_categories = {"module-assembling-1"},
+      crafting_categories = {"module-assembling-0", "module-assembling-1"},
       crafting_speed = 1,
       energy_source = {
         type = "electric",
@@ -87,7 +87,7 @@ data:extend(
       icon = "__CustomModules__/graphics/icons/entities/module-assembler-2.png",
       icon_size = 32,
       flags = {"placeable-neutral", "placeable-player", "player-creation", "not-rotatable"},
-      minable = {hardness = 0.5, mining_time = 4, result = "module-assembler-2"},
+      minable = {mining_time = 1, result = "module-assembler-2"},
       max_health = 800,
       resistances = {
         {
@@ -145,7 +145,7 @@ data:extend(
         idle_sound = {filename = "__base__/sound/idle1.ogg", volume = 1},
         apparent_volume = 4
       },
-      crafting_categories = {"module-assembling-1", "module-assembling-2"},
+      crafting_categories = {"module-assembling-0", "module-assembling-1", "module-assembling-2"},
       crafting_speed = 1.5,
       energy_source = {
         type = "electric",
@@ -168,7 +168,7 @@ data:extend(
       icon = "__CustomModules__/graphics/icons/entities/module-assembler-3.png",
       icon_size = 32,
       flags = {"placeable-neutral", "placeable-player", "player-creation", "not-rotatable"},
-      minable = {hardness = 0.5, mining_time = 6, result = "module-assembler-3"},
+      minable = {mining_time = 1, result = "module-assembler-3"},
       max_health = 1200,
       resistances = {
         {
@@ -226,7 +226,7 @@ data:extend(
         idle_sound = {filename = "__base__/sound/idle1.ogg", volume = 1},
         apparent_volume = 4
       },
-      crafting_categories = {"module-assembling-1", "module-assembling-2", "module-assembling-3"},
+      crafting_categories = {"module-assembling-0", "module-assembling-1", "module-assembling-2", "module-assembling-3"},
       crafting_speed = 2.25,
       energy_source = {
         type = "electric",

@@ -1,5 +1,14 @@
 ---------------------------------------------------------------------------------------------------
-Version: 0.17.6
+Version: 0.18.1
+Date: 02. 07. 2020
+  Changes:
+    - Set default request amount to 50 for all modules
+    - Module assemblers can now craft the prototype modules
+  Bugfixes:
+    - Fixed a loading error caused by entity prototypes with a module specification with 0 slots and no allowed effects.
+    - Updated tirislib, as the old version sometimes broke the factorio standard library
+---------------------------------------------------------------------------------------------------
+Version: 0.18.0
 Date: 21. 01. 2020
   Changes:
     - Update to factorio 0.18

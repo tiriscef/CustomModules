@@ -392,7 +392,7 @@ local function create_module(tier, j, k)
 		order = "q-b-" .. get_order(),
 		order_in_inventory = get_order(),
 		stack_size = 50,
-		default_request_amount = 10,
+		default_request_amount = 50,
 		effect = get_effect(tier)
 	}
 
@@ -427,7 +427,7 @@ for j = 1, 3 do
 					}
 				},
 				icon_size = 32,
-				category = "crafting",
+				category = "module-assembling-0",
 				energy_required = 5.0,
 				ingredients = get_ingredients(0, j, 0),
 				results = {
@@ -485,7 +485,7 @@ data:extend(
 			order = "q-a1",
 			order_in_inventory = "q-a1",
 			stack_size = 50,
-			default_request_amount = 10,
+			default_request_amount = 50,
 			effect = {
 				productivity = {bonus = red_productivity * multiplier_productivity},
 				speed = {bonus = red_speed * multiplier_speed},
@@ -514,7 +514,7 @@ data:extend(
 			order = "q-a2",
 			order_in_inventory = "q-a2",
 			stack_size = 50,
-			default_request_amount = 10,
+			default_request_amount = 50,
 			effect = {
 				productivity = {bonus = 0},
 				speed = {bonus = green_speed * multiplier_speed},
@@ -541,7 +541,7 @@ data:extend(
 			order = "q-a3",
 			order_in_inventory = "q-a3",
 			stack_size = 50,
-			default_request_amount = 10,
+			default_request_amount = 50,
 			effect = {
 				productivity = {bonus = 0},
 				speed = {bonus = blue_speed * multiplier_speed},
